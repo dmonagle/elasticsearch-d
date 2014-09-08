@@ -145,10 +145,7 @@ class Transport {
 			exception.connection.makeDead();
 		}
 		catch (RequestException exception) {
-			string message;
-			message ~= exception.msg ~ ": ";
-			message ~= exception.response.responseBody;
-			transportLog(LogLevel.error, message);
+			transportLog(LogLevel.error, exception.msg);
 		}
 
 		return response;

@@ -4,6 +4,7 @@ public import elasticsearch.client;
 
 public import elasticsearch.transport.transport;
 public import elasticsearch.transport.response;
+public import elasticsearch.transport.exceptions;
 public import elasticsearch.api.exceptions;
 public import elasticsearch.parameters;
 

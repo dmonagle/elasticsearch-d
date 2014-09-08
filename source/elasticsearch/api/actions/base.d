@@ -44,3 +44,19 @@ Response index(Client client, string indexName, string type, string requestBody,
 	
 	return index(client, p);
 }
+
+Response search(Client client, Parameters arguments = Parameters()) {
+	if (!arguments.hasField("index") && arguments.hasField("type")) arguments["index"] = "_all";
+
+	auto params = arguments.validateAndExtract(
+		"analyzer", "analyze_wildcard", "default_operator", "df", "explain", "fields", "from",
+		"ignore_indices", "ignore_unavailable", "allow_no_indices", "expand_wildcards", "lenient",
+		"lowercase_expanded_terms", "preference", "q", "routing", "scroll", "search_type", "size", "sort",
+		"source", "_source", "_source_include", "source_exclude", "stats", "suggest_field", "suggest_mode",
+		"suggest_size", "suggest_text", "timeout", "version"
+	);
+
+	auto path = esPathify(esListify(arguments["index"]), esListify(arguments["type"]), "_search");
+
+	return client.performRequest(RequestMethod.GET, path, params, arguments["body"]);
+}

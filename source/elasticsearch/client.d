@@ -2,13 +2,12 @@
 
 public import vibe.data.json;
 
-import elasticsearch.transport.transport;
+public import elasticsearch.transport.transport;
 import elasticsearch.parameters;
 
 import elasticsearch.transport.http.vibe;
 
 class Client {
-	alias actions = elasticsearch.api.actions;
 	protected {
 		Transport _transport;
 	}

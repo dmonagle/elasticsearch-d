@@ -23,6 +23,8 @@ class RequestException : Exception {
 	Response response;
 
 	this(Connection connection, RequestMethod method, string path, Parameters parameters, string requestBody, Response response) { 
+		import std.string;
+
 		this.connection = connection;
 		this.method = method;
 		this.path = path;
@@ -30,7 +32,9 @@ class RequestException : Exception {
 		this.requestBody = requestBody;
 		this.response = response;
 
-		super("Elasticsearch request failed"); 
+		auto message = format("Elasticsearch request failed (%s %s): %s", 
+		                      method, path, response.responseBody);
+		super(message); 
 	}
 }
 
