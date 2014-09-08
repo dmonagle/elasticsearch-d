@@ -1,14 +1,22 @@
 ﻿module elasticsearch.api.exceptions;
 
-import elasticsearch.json_params;
+import elasticsearch.parameters;
 
 class ArgumentException : Exception {
-	JsonParams params;
+	const Parameters params;
 	string api;
 	
-	this(JsonParams params, string api, string message = "") { 
+	this(const ref Parameters params, string api, string message = "") { 
+		import vibe.data.json;
+
 		this.api = api;
 		this.params = params;
-		super("Elasticsearch Argument Error: '" ~ message ~ "' while calling api '" ~ api ~ "' with params: '" ~ params.toPrettyString); 
+
+		string eMessage = "Elasticsearch Argument Error: '" ~ message ~ "' while calling api '" ~ api ~ "' with params: '";
+		//auto paramsString = params.toRepresentation.serializeToJson();
+		//eMessage ~= paramsString.toPrettyString();
+
+		super(eMessage); 
 	}
+
 }

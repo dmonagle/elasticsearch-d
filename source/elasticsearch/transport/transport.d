@@ -59,7 +59,7 @@ class Transport {
 	}  
 
 	protected { 
-		abstract Response performTransportRequest(Connection connection, RequestMethod method, string path, Parameters parameters = Parameters(), Json requestBody = Json.emptyObject);
+		abstract Response performTransportRequest(Connection connection, RequestMethod method, string path, Parameters parameters = Parameters(), string requestBody = "");
 		abstract void transportLog(LogLevel level, string message);
 	}
 
@@ -127,7 +127,7 @@ class Transport {
 		_connections = buildConnections;
 	}
 
-	Response performRequest(RequestMethod method, string path, Parameters parameters = Parameters(), Json requestBody = Json.emptyObject) {
+	Response performRequest(RequestMethod method, string path, Parameters parameters = Parameters(), string requestBody = "") {
 		// TODO: Make this more like the official method where it logs failures and automatically reloads connections on failure etc...
 		int tries;
 		bool success;
@@ -145,7 +145,10 @@ class Transport {
 			exception.connection.makeDead();
 		}
 		catch (RequestException exception) {
-			transportLog(LogLevel.error, exception.msg);
+			string message;
+			message ~= exception.msg ~ ": ";
+			message ~= exception.response.responseBody;
+			transportLog(LogLevel.error, message);
 		}
 
 		return response;

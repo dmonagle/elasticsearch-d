@@ -19,10 +19,10 @@ class RequestException : Exception {
 	RequestMethod method;
 	string path;
 	Parameters parameters;
-	Json requestBody;
+	string requestBody;
 	Response response;
 
-	this(Connection connection, RequestMethod method, string path, Parameters parameters, Json requestBody, Response response) { 
+	this(Connection connection, RequestMethod method, string path, Parameters parameters, string requestBody, Response response) { 
 		this.connection = connection;
 		this.method = method;
 		this.path = path;

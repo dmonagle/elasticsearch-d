@@ -1,16 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="elasticsearch-d" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="source/elasticsearch/transport/http/vibe.d">
+  <MonoDevelop.Ide.Workbench ActiveDocument="source/elasticsearch/client.d">
     <Files>
-      <File FileName="source/elasticsearch/transport/transport.d" Line="37" Column="37" />
-      <File FileName="source/elasticsearch/transport/http/vibe.d" Line="3" Column="3" />
-      <File FileName="source/elasticsearch/transport/response.d" Line="10" Column="10" />
-      <File FileName="source/elasticsearch/transport/sniffer.d" Line="10" Column="10" />
-      <File FileName="source/elasticsearch/transport/connections/selector.d" Line="2" Column="2" />
-      <File FileName="source/elasticsearch/parameters.d" Line="17" Column="17" />
-      <File FileName="source/elasticsearch/transport/exceptions.d" Line="105" Column="105" />
-      <File FileName="source/elasticsearch/transport/connections/collection.d" Line="6" Column="6" />
-      <File FileName="dub.json" Line="18" Column="18" />
+      <File FileName="source/elasticsearch/transport/http/vibe.d" Line="1" Column="1" />
+      <File FileName="source/elasticsearch/client.d" Line="29" Column="29" />
+      <File FileName="source/elasticsearch/api/actions/indices.d" Line="1" Column="1" />
+      <File FileName="source/elasticsearch/parameters.d" Line="18" Column="18" />
+      <File FileName="source/elasticsearch/api/exceptions.d" Line="3" Column="3" />
+      <File FileName="source/elasticsearch/api/base.d" Line="1" Column="1" />
+      <File FileName="source/elasticsearch/api/all.d" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -1,4 +1,5 @@
 ﻿module elasticsearch.api.all;
 
-import elasticsearch.api.actions.all;
-import elasticsearch.api.namespace.all;
+import elasticsearch.api.base;
+import elasticsearch.api.actions.indices;
+

@@ -1,15 +1,14 @@
 ﻿module elasticsearch.client;
 
+public import vibe.data.json;
+
 import elasticsearch.transport.transport;
 import elasticsearch.parameters;
-public import vibe.data.json;
 
 import elasticsearch.transport.http.vibe;
 
-import elasticsearch.api.base;
-import elasticsearch.api.actions.indices;
-
 class Client {
+	alias actions = elasticsearch.api.actions;
 	protected {
 		Transport _transport;
 	}
@@ -29,16 +28,46 @@ class Client {
 		_transport.reloadConnections();
 	}
 
-	Response performRequest(RequestMethod method, string path, Parameters parameters = Parameters(), Json requestBody = Json.emptyObject) {
+	Response performRequest(RequestMethod method, string path, Parameters parameters = Parameters(), string requestBody = "") {
 		return _transport.performRequest(method, path, parameters, requestBody);
 	}
 
-	mixin elasticsearch.api.actions.indices.all;
 }
 
 unittest {
+	import elasticsearch.api.actions.base;
+	import elasticsearch.api.actions.indices;
+
 	auto client = new Client(Host());
-	client.indexCreate("davids_test_index", JsonParams("{ body: {}}"));
+
+	Parameters p;
+	p.addField("index", "es_test_index");
+	p.addField("body", `
+		{ 
+			"settings": {
+	           "index": {
+	             "number_of_shards": 1,
+	             "number_of_replicas": 0,
+	           },
+	         },
+	         "mappings": {
+	           "user": {
+	             "properties": {
+	               "name": { "type": "string"}
+	             }
+	           }
+	         }			
+		}
+	`);
+
+	auto user = Json.emptyObject;
+	user.name = "Ginny";
+	user._id = "1024";
+
+	client.createIndex(p);
+	client.index("es_test_index", "user", "1024", user.toString);
+
+	client.deleteIndex("es_test_index");
 }
 
 unittest {
