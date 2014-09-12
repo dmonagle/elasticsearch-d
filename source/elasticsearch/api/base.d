@@ -15,8 +15,8 @@ import std.array;
 
 static string[] ES_COMMON_PARAMETERS = [
 	"ignore",
-	"index", "type", "id",
-	"body",
+	//"index", "type", "id",
+	//"body",
 	"node_id",
 	"name",
 	"field"

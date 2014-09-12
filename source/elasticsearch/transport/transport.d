@@ -147,6 +147,11 @@ class Transport {
 		catch (RequestException exception) {
 			transportLog(LogLevel.error, exception.msg);
 		}
+		catch (Exception exception) {
+			transportLog(LogLevel.error, exception.msg);
+			transportLog(LogLevel.error, method.to!string ~ " " ~ c.fullURL(path, parameters));
+			transportLog(LogLevel.error, requestBody);
+		}
 
 		return response;
 	}
