@@ -4,7 +4,7 @@
 	"copyright": "Copyright © 2014, David Monagle",
 	"authors": ["David Monagle"],
 	"dependencies": {
-                "vibe-d": "~master",
+                "vibe-d": ">=0.7.21-beta.2",
         },
         "configurations": [
                 {
