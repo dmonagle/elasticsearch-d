@@ -46,7 +46,8 @@ Response index(Client client, string indexName, string type, string requestBody,
 }
 
 Response search(Client client, Parameters arguments = Parameters()) {
-	if (!arguments.hasField("index") && arguments.hasField("type")) arguments["index"] = "_all";
+	string index = arguments.hasField("index") ? arguments["index"] : "_all";
+	string type = arguments.hasField("type") ? arguments["type"] : "";
 
 	auto params = arguments.validateAndExtract(
 		"analyzer", "analyze_wildcard", "default_operator", "df", "explain", "fields", "from",
@@ -56,7 +57,7 @@ Response search(Client client, Parameters arguments = Parameters()) {
 		"suggest_size", "suggest_text", "timeout", "version"
 	);
 
-	auto path = esPathify(esListify(arguments["index"]), esListify(arguments["type"]), "_search");
+	auto path = esPathify(esListify(index), esListify(type), "_search");
 
 	return client.performRequest(RequestMethod.GET, path, params, arguments["body"]);
 }
