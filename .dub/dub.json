@@ -1,5 +1,12 @@
 {
 	"dub": {
+		"cachedUpgrades": {
+			"vibe-d": "0.7.21-rc.4",
+			"libevent": "2.0.1+2.0.16",
+			"openssl": "1.0.0+1.0.0e",
+			"libev": "4.0.0+4.04"
+		},
+		"lastUpgrade": "2014-11-05T10:14:08.393217",
 		"lastUpdate": {
 			"colorize": "2014-09-07T14:29:53.709695"
 		}
