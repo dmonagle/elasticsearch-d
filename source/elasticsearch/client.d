@@ -64,6 +64,8 @@ unittest {
 	user._id = "1024";
 
 	client.createIndex(p);
+
+	// Index the user to the es_text_index container with a type of "user" and id of "1024"
 	client.index("es_test_index", "user", "1024", user.toString);
 
 	client.deleteIndex("es_test_index");
