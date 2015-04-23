@@ -1,17 +1,17 @@
-﻿<Properties>
+﻿<Properties StartupItem="dub.json">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="elasticsearch-d" PreferredExecutionTarget="plain" />
   <MonoDevelop.Ide.Workbench ActiveDocument="dub.json">
     <Files>
       <File FileName="source/elasticsearch/client.d" Line="1" Column="1" />
-      <File FileName="source/elasticsearch/api/actions/indices.d" Line="74" Column="74" />
-      <File FileName="source/elasticsearch/parameters.d" Line="2" Column="2" />
+      <File FileName="source/elasticsearch/api/actions/indices.d" Line="1" Column="1" />
+      <File FileName="source/elasticsearch/parameters.d" Line="1" Column="1" />
       <File FileName="source/elasticsearch/api/exceptions.d" Line="1" Column="1" />
       <File FileName="source/elasticsearch/api/base.d" Line="1" Column="1" />
       <File FileName="source/elasticsearch/api/all.d" Line="1" Column="1" />
       <File FileName="source/elasticsearch/api/actions/cat/all.d" Line="1" Column="1" />
       <File FileName="source/elasticsearch/api/actions/snapshot/_delete.d" Line="1" Column="1" />
-      <File FileName="README.md" Line="32" Column="32" />
-      <File FileName="dub.json" Line="1" Column="1" />
+      <File FileName="README.md" Line="1" Column="1" />
+      <File FileName="dub.json" Line="15" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
