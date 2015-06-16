@@ -2,3 +2,4 @@ __test__elasticsearch-d__
 libelasticsearch-d.a
 .DS_Store
 .dub/build
+dub.userprefs
