@@ -48,6 +48,19 @@ Response delete_(Client client, string index, Parameters params = Parameters()) 
 	return delete_(client, [index], params);
 }
 
+alias refreshIndex = elasticsearch.api.actions.indices.refresh_;
+
+Response refresh_(Client client, string[] indexes, Parameters arguments = Parameters()) {
+       auto params = arguments.validateAndExtract("timeout");
+       indexes ~= "_refresh";
+       return client.performRequest(RequestMethod.POST, esPathify(esListify(indexes)), params);
+}
+
+Response refresh_(Client client, string index, Parameters params = Parameters()) {
+       return refresh_(client, [index], params);
+}
+
+
 alias indexExists = elasticsearch.api.actions.indices.exists;
 
 bool exists(Client client, Parameters arguments) {
