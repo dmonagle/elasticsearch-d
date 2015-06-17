@@ -53,7 +53,7 @@ alias refreshIndex = elasticsearch.api.actions.indices.refresh_;
 Response refresh_(Client client, string[] indexes, Parameters arguments = Parameters()) {
        auto params = arguments.validateAndExtract("timeout");
        indexes ~= "_refresh";
-       return client.performRequest(RequestMethod.POST, esPathify(esListify(indexes)), params);
+       return client.performRequest(RequestMethod.POST, esPathify(indexes), params);
 }
 
 Response refresh_(Client client, string index, Parameters params = Parameters()) {
