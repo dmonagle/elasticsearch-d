@@ -61,3 +61,11 @@ Response search(Client client, Parameters arguments = Parameters()) {
 
 	return client.performRequest(RequestMethod.GET, path, params, arguments["body"]);
 }
+
+Response scroll(Client client, Parameters arguments = Parameters()) {
+	auto params = arguments.validateAndExtract("scroll", "scroll_id");
+	
+	auto path = esPathify("_search", "scroll");
+
+	return client.performRequest(RequestMethod.GET, path, params);
+}
