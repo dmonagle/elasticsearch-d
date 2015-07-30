@@ -38,7 +38,8 @@ override:
 	
 	@property string protocol() { return "http"; }
 	
-	Response performTransportRequest(Connection connection, RequestMethod method, string path, Parameters parameters, string requestBody = "") {		Response response;
+	Response performTransportRequest(Connection connection, RequestMethod method, string path, Parameters parameters, string requestBody = "") {		
+		Response response;
 		requestHTTP(connection.fullURL(path, parameters),
 		            (scope req) {
 			req.method = vibeTransportRequestMethod(method);
