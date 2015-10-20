@@ -1,10 +1,14 @@
 ﻿module elasticsearch.api.actions.base;
 
-import elasticsearch.api.base;
+import elasticsearch.api.parameters;
+import elasticsearch.transport;
+import elasticsearch.client;
+
+import vibe.http.common;
 
 alias create = elasticsearch.api.actions.base.index;
 
-Response index(Client client, Parameters arguments = Parameters()) {
+Response index(Client client, ESParams arguments = ESParams()) {
 	RequestMethod method;
 
 	arguments.enforceParameter("index");
@@ -28,7 +32,7 @@ Response index(Client client, Parameters arguments = Parameters()) {
 	return client.performRequest(method, esPathify(path), params, requestBody);
 }
 
-Response index(Client client, string indexName, string type, string id, string requestBody, Parameters p = Parameters()) {
+Response index(Client client, string indexName, string type, string id, string requestBody, ESParams p = ESParams()) {
 	p["index"] = indexName;
 	p["type"] = type;
 	p["id"] = id;
@@ -37,7 +41,7 @@ Response index(Client client, string indexName, string type, string id, string r
 	return index(client, p);
 }
 
-Response index(Client client, string indexName, string type, string requestBody, Parameters p = Parameters()) {
+Response index(Client client, string indexName, string type, string requestBody, ESParams p = ESParams()) {
 	p["index"] = indexName;
 	p["type"] = type;
 	p["body"] = requestBody;
@@ -45,7 +49,7 @@ Response index(Client client, string indexName, string type, string requestBody,
 	return index(client, p);
 }
 
-Response search(Client client, Parameters arguments = Parameters()) {
+Response search(Client client, ESParams arguments = ESParams()) {
 	string index = arguments.hasField("index") ? arguments["index"] : "_all";
 	string type = arguments.hasField("type") ? arguments["type"] : "";
 
@@ -62,7 +66,7 @@ Response search(Client client, Parameters arguments = Parameters()) {
 	return client.performRequest(RequestMethod.GET, path, params, arguments["body"]);
 }
 
-Response scroll(Client client, Parameters arguments = Parameters()) {
+Response scroll(Client client, ESParams arguments = ESParams()) {
 	auto params = arguments.validateAndExtract("scroll", "scroll_id");
 	
 	auto path = esPathify("_search", "scroll");

@@ -3,7 +3,7 @@
 public import vibe.data.json;
 
 public import elasticsearch.transport.transport;
-import elasticsearch.parameters;
+public import elasticsearch.api.parameters;
 
 import elasticsearch.transport.http.vibe;
 
@@ -27,7 +27,7 @@ class Client {
 		_transport.reloadConnections();
 	}
 
-	Response performRequest(RequestMethod method, string path, Parameters parameters = Parameters(), string requestBody = "") {
+	Response performRequest(RequestMethod method, string path, ESParams parameters = ESParams(), string requestBody = "") {
 		return _transport.performRequest(method, path, parameters, requestBody);
 	}
 
@@ -39,7 +39,7 @@ unittest {
 
 	auto client = new Client(Host());
 
-	Parameters p;
+	ESParams p;
 	p.addField("index", "es_test_index");
 	p.addField("body", `
 		{ 
@@ -77,11 +77,11 @@ unittest {
 	auto client = new Client(Host());
 	client.reloadConnections();
 	
-	client.performRequest(RequestMethod.HEAD, "", Parameters());
-	auto response = client.performRequest(RequestMethod.HEAD, "", Parameters());
+	client.performRequest(RequestMethod.HEAD, "", ESParams());
+	auto response = client.performRequest(RequestMethod.HEAD, "", ESParams());
 	assert(response.status == 200);
 	
-	response = client.performRequest(RequestMethod.GET, "_cluster/state", Parameters());
+	response = client.performRequest(RequestMethod.GET, "_cluster/state", ESParams());
 	assert(response.status == 200);
 	assert(response.bodyIsJson);
 }

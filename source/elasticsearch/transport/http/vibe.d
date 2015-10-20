@@ -2,7 +2,7 @@
 
 public import elasticsearch.transport.transport;
 public import elasticsearch.transport.exceptions;
-import elasticsearch.parameters;
+import elasticsearch.api.parameters;
 
 import vibe.core.log;
 import vibe.http.client;
@@ -38,7 +38,7 @@ override:
 	
 	@property string protocol() { return "http"; }
 	
-	Response performTransportRequest(Connection connection, RequestMethod method, string path, Parameters parameters, string requestBody = "") {		
+	Response performTransportRequest(Connection connection, RequestMethod method, string path, ESParams parameters, string requestBody = "") {		
 		Response response;
 		requestHTTP(connection.fullURL(path, parameters),
 			(scope req) {

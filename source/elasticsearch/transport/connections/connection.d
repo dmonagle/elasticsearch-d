@@ -1,7 +1,7 @@
 ﻿module elasticsearch.transport.connections.connection;
 
 import elasticsearch.transport.transport;
-import elasticsearch.parameters;
+import elasticsearch.api.parameters;
 import std.datetime;
 
 /**
@@ -74,7 +74,7 @@ class Connection {
 	}
 
 	/// Returns the complete endpoint URL with host, port, path and serialized parameters.
-	string fullURL(string path, Parameters params) {
+	string fullURL(string path, ESParams params) {
 		import std.conv;
 
 		auto url = host.url;
@@ -83,7 +83,7 @@ class Connection {
 		return url;
 	}
 
-	string fullPath(string path, Parameters params) {
+	string fullPath(string path, ESParams params) {
 		import std.array;
 		import std.uri;
 

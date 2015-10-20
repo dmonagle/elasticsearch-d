@@ -3,3 +3,4 @@ libelasticsearch-d.a
 .DS_Store
 .dub/build
 dub.userprefs
+dub.selections.json

@@ -1,8 +1,15 @@
-﻿module elasticsearch.transport.exceptions;
+﻿/**
+	* Exception definitions
+	*
+	* Copyright: © 2015 David Monagle
+	* License: Subject to the terms of the MIT license, as written in the included LICENSE.txt file.
+	* Authors: David Monagle
+*/
+module elasticsearch.transport.exceptions;
 
 import elasticsearch.transport.connections.connection;
 import elasticsearch.transport.transport;
-import elasticsearch.parameters;
+import elasticsearch.api.parameters;
 import vibe.data.json;
 
 class HostUnreachableException : Exception {
@@ -18,11 +25,11 @@ class RequestException : Exception {
 	Connection connection;
 	RequestMethod method;
 	string path;
-	Parameters parameters;
+	ESParams parameters;
 	string requestBody;
 	Response response;
 
-	this(Connection connection, RequestMethod method, string path, Parameters parameters, string requestBody, Response response) { 
+	this(Connection connection, RequestMethod method, string path, ESParams parameters, string requestBody, Response response) { 
 		import std.string;
 
 		this.connection = connection;
