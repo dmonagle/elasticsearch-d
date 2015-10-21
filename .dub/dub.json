@@ -1,14 +1,15 @@
 {
 	"dub": {
 		"cachedUpgrades": {
-			"vibe-d": "0.7.21-rc.4",
+			"feature-test-d": "1.0.1",
+			"memutils": "0.4.1",
+			"colorize": "1.0.5",
+			"vibe-d": "0.7.25",
 			"libevent": "2.0.1+2.0.16",
-			"openssl": "1.0.0+1.0.0e",
-			"libev": "4.0.0+4.04"
+			"openssl": "1.1.4+1.0.1g",
+			"libev": "5.0.0+4.04",
+			"libasync": "0.7.5"
 		},
-		"lastUpgrade": "2014-11-05T10:14:08.393217",
-		"lastUpdate": {
-			"colorize": "2014-09-07T14:29:53.709695"
-		}
+		"lastUpgrade": "2015-10-21T10:05:02.995301"
 	}
 }

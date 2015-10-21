@@ -1,19 +1,19 @@
 ﻿module elasticsearch.transport.connections.connection;
 
 import elasticsearch.transport.transport;
-import elasticsearch.parameters;
+import elasticsearch.api.parameters;
 import std.datetime;
 
 /**
  * Wraps the connection information and logic.
  * 
  * The Connection instance wraps the host information (hostname, port, attributes, etc),
- * as well as the "session" (a transport client object, such as a {HTTP::Faraday} instance).
+ * as well as the "session" (a transport client object, such as a {elasticsearch.transport.http.vibe} instance).
  *
  * It provides methods to construct and properly encode the URLs and paths for passing them
  * to the transport client object.
  *
- * It provides methods to handle connection livecycle (dead, alive, healthy).
+ * It provides methods to handle connection lifecycle (dead, alive, healthy).
  */
 
 class Connection {
@@ -74,7 +74,7 @@ class Connection {
 	}
 
 	/// Returns the complete endpoint URL with host, port, path and serialized parameters.
-	string fullURL(string path, Parameters params) {
+	string fullURL(string path, ESParams params) {
 		import std.conv;
 
 		auto url = host.url;
@@ -83,7 +83,7 @@ class Connection {
 		return url;
 	}
 
-	string fullPath(string path, Parameters params) {
+	string fullPath(string path, ESParams params) {
 		import std.array;
 		import std.uri;
 

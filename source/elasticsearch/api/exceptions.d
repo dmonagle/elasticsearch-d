@@ -1,12 +1,12 @@
 ﻿module elasticsearch.api.exceptions;
 
-import elasticsearch.parameters;
+import elasticsearch.api.parameters;
 
 class ArgumentException : Exception {
-	const Parameters params;
+	const ESParams params;
 	string api;
 	
-	this(const ref Parameters params, string api, string message = "") { 
+	this(const ref ESParams params, string api, string message = "") { 
 		import vibe.data.json;
 
 		this.api = api;

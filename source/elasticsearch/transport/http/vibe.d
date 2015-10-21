@@ -2,7 +2,7 @@
 
 public import elasticsearch.transport.transport;
 public import elasticsearch.transport.exceptions;
-import elasticsearch.parameters;
+import elasticsearch.api.parameters;
 
 import vibe.core.log;
 import vibe.http.client;
@@ -38,36 +38,37 @@ override:
 	
 	@property string protocol() { return "http"; }
 	
-	Response performTransportRequest(Connection connection, RequestMethod method, string path, Parameters parameters, string requestBody = "") {		Response response;
+	Response performTransportRequest(Connection connection, RequestMethod method, string path, ESParams parameters, string requestBody = "") {		
+		Response response;
 		requestHTTP(connection.fullURL(path, parameters),
-		            (scope req) {
-			req.method = vibeTransportRequestMethod(method);
-			if (requestBody != "") {
-				auto json = parseJsonString(requestBody);
-				req.writeJsonBody(json);
-			}
-		},
-		(scope res) {
-			response.status = res.statusCode;
-			response.headers = res.headers;
-			if (method != RequestMethod.HEAD) {
-				if (res.statusCode >= 200 && res.statusCode < 300) {
-					auto responseBody = res.bodyReader.readAllUTF8();
-					response.responseBody = responseBody;
+			(scope req) {
+				req.method = vibeTransportRequestMethod(method);
+				if (requestBody != "") {
+					//auto json = parseJsonString(requestBody);
+					req.writeBody(cast(ubyte[])requestBody);
 				}
-				else {
-					switch(res.statusCode) {
-						case(HTTPStatus.gatewayTimeout, HTTPStatus.requestTimeout): 
-							throw new HostUnreachableException(connection);
-						default: 
-							auto responseBody = res.bodyReader.readAllUTF8();
-							response.responseBody = responseBody;
-							throw new RequestException(connection, method, path, parameters, requestBody, response);
+			},
+			(scope res) {
+				response.status = res.statusCode;
+				response.headers = res.headers;
+				if (method != RequestMethod.HEAD) {
+					if (res.statusCode >= 200 && res.statusCode < 300) {
+						auto responseBody = res.bodyReader.readAllUTF8();
+						response.responseBody = responseBody;
+					}
+					else {
+						switch(res.statusCode) {
+							case(HTTPStatus.gatewayTimeout, HTTPStatus.requestTimeout): 
+								throw new HostUnreachableException(connection);
+							default: 
+								auto responseBody = res.bodyReader.readAllUTF8();
+								response.responseBody = responseBody;
+								throw new RequestException(connection, method, path, parameters, requestBody, response);
+						}
 					}
 				}
 			}
-		}
-		);
+			);
 		
 		return response;
 	}

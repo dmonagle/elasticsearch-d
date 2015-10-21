@@ -7,7 +7,7 @@ public import elasticsearch.transport.connections.collection;
 
 import elasticsearch.transport.connections.collection;
 import elasticsearch.transport.exceptions;
-import elasticsearch.parameters;
+import elasticsearch.api.parameters;
 import elasticsearch.transport.sniffer;
 
 enum RequestMethod {
@@ -59,7 +59,7 @@ class Transport {
 	}  
 
 	protected { 
-		abstract Response performTransportRequest(Connection connection, RequestMethod method, string path, Parameters parameters = Parameters(), string requestBody = "");
+		abstract Response performTransportRequest(Connection connection, RequestMethod method, string path, ESParams parameters = ESParams(), string requestBody = "");
 		abstract void transportLog(LogLevel level, string message);
 	}
 
@@ -102,10 +102,10 @@ class Transport {
 	void reloadConnections() {
 		auto sniffer = new Sniffer(this);
 
-		transportLog(LogLevel.info, "Reloading connections");
+		transportLog(LogLevel.debug_, "Reloading connections");
 		auto hosts = sniffer.hosts;
 		if (hosts.length) {
-			transportLog(LogLevel.info, format("Sniffer found %s hosts", hosts.length));
+			transportLog(LogLevel.debug_, format("Sniffer found %s hosts", hosts.length));
 			_hosts = hosts;
 		}
 		rebuildConnections();
@@ -127,7 +127,7 @@ class Transport {
 		_connections = buildConnections;
 	}
 
-	Response performRequest(RequestMethod method, string path, Parameters parameters = Parameters(), string requestBody = "") {
+	Response performRequest(RequestMethod method, string path, ESParams parameters = ESParams(), string requestBody = "") {
 		// TODO: Make this more like the official method where it logs failures and automatically reloads connections on failure etc...
 		int tries;
 		bool success;
