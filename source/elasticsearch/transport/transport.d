@@ -102,10 +102,10 @@ class Transport {
 	void reloadConnections() {
 		auto sniffer = new Sniffer(this);
 
-		transportLog(LogLevel.info, "Reloading connections");
+		transportLog(LogLevel.debug_, "Reloading connections");
 		auto hosts = sniffer.hosts;
 		if (hosts.length) {
-			transportLog(LogLevel.info, format("Sniffer found %s hosts", hosts.length));
+			transportLog(LogLevel.debug_, format("Sniffer found %s hosts", hosts.length));
 			_hosts = hosts;
 		}
 		rebuildConnections();
