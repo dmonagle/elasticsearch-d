@@ -4,3 +4,6 @@ libelasticsearch-d.a
 .dub/build
 dub.userprefs
 dub.selections.json
+docs.json
+__dummy.html
+docs

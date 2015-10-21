@@ -1,10 +1,18 @@
-﻿module elasticsearch.api.actions.indices;
+﻿/**
+	* Indice API
+	*
+	* Copyright: © 2015 David Monagle
+	* License: Subject to the terms of the MIT license, as written in the included LICENSE.txt file.
+	* Authors: David Monagle
+*/
+module elasticsearch.api.actions.indices;
 
 import elasticsearch.api.parameters;
 import elasticsearch.transport.response;
 import elasticsearch.transport.exceptions;
 import elasticsearch.client;
 
+//
 alias createIndex = elasticsearch.api.actions.indices.create;
 
 /** Create an index.
@@ -34,38 +42,47 @@ Response create(Client client, ESParams arguments = ESParams()) {
 	return client.performRequest(RequestMethod.PUT, esPathify(index), params, requestBody);
 }
 
-Response create(Client client, string indexName, string indexBody, ESParams params = ESParams()) {
+///
+Response create(Client client, string indexName, string indexBody = "{}", ESParams params = ESParams()) {
 	params["index"] = indexName;
 	params["body"] = indexBody;
 	return create(client, params);
 }
 
+///
 alias deleteIndex = elasticsearch.api.actions.indices.delete_;
 
+///
 Response delete_(Client client, string[] indexes, ESParams arguments = ESParams()) {
 	auto params = arguments.validateAndExtract("timeout");
 	return client.performRequest(RequestMethod.DELETE, esPathify(esListify(indexes)), params);
 }
 
+///
 Response delete_(Client client, string index, ESParams params = ESParams()) {
 	return delete_(client, [index], params);
 }
 
+///
 alias refreshIndex = elasticsearch.api.actions.indices.refresh_;
 
+///
 Response refresh_(Client client, string[] indexes, ESParams arguments = ESParams()) {
        auto params = arguments.validateAndExtract("timeout");
        indexes ~= "_refresh";
        return client.performRequest(RequestMethod.POST, esPathify(indexes), params);
 }
 
+///
 Response refresh_(Client client, string index, ESParams params = ESParams()) {
        return refresh_(client, [index], params);
 }
 
 
+///
 alias indexExists = elasticsearch.api.actions.indices.exists;
 
+///
 bool exists(Client client, ESParams arguments) {
 	arguments.enforceParameter("index");
 
@@ -83,6 +100,7 @@ bool exists(Client client, ESParams arguments) {
 	}
 }
 
+///
 bool exists(Client client, string indexName, ESParams params = ESParams()) {
 	params["index"] = indexName;
 
