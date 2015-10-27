@@ -44,9 +44,10 @@ override:
 			(scope req) {
 				req.method = vibeTransportRequestMethod(method);
 				if (requestBody != "") {
-					//auto json = parseJsonString(requestBody);
 					req.writeBody(cast(ubyte[])requestBody);
 				}
+				logDebugV("ES Transport Request: %s %s", method, path);
+				if (requestBody.length) logTrace("ES Transport Request Body: \n%s", requestBody);
 			},
 			(scope res) {
 				response.status = res.statusCode;

@@ -84,6 +84,11 @@ void enforceParameter(const ref ESParams p, string name) {
 	enforce(p.hasField(name), new ArgumentException(p, name ~ " parameter is required"));
 }
 
+/// Sets a parameter to a default value if if does not exist
+void defaultParameter(ref ESParams p, string name, string defaultValue) {
+	if(!p.hasField(name)) p[name] = defaultValue;
+}
+
 /// Returns a new list of params which will only included common parameters plus those `allowed` passed in parameters
 ESParams validateAndExtract(const ref ESParams params, string[] allowed ...) {
 	return params.filterESParams(allowed ~ ES_COMMON_PARAMETERS ~ ES_COMMON_QUERY_PARAMETERS);

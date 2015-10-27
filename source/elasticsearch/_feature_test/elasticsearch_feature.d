@@ -23,7 +23,7 @@ debug (featureTest) {
 
 		void clearAllTestIndexes() {
 			info("Clearing all test indices.");
-			esForFeatureTest.delete_(esTestPrefix ~ "*");
+			esForFeatureTest.deleteIndex(esTestPrefix ~ "*");
 		}
 	}
 }
