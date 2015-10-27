@@ -3,7 +3,7 @@
 	"description": "A D Elasticsearch library with an API similar to the official Elasticsearch packages for other languages.",
 	"copyright": "Copyright © 2014, David Monagle",
 	"authors": ["David Monagle"],
-	"version": "1.0.0-beta.4",
+	"version": "1.0.0-rc.1",
 	"dependencies": {
         "vibe-d": ">=0.7.25",
         "feature-test-d": ">=1.0.1"
