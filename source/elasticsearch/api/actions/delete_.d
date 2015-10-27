@@ -34,7 +34,7 @@ import vibe.http.common;
 ///
 Response delete_(Client client, ESParams arguments = ESParams()) {
 	arguments.enforceParameter("index");
-	arguments.defaultParameter("type", "_all");
+	arguments.enforceParameter("type");
 
 	auto params = arguments.validateAndExtract(
 		"consistency", "parent", "refresh", "replication", "routing",
@@ -54,12 +54,3 @@ Response delete_(Client client, string indexName, string type, string id, ESPara
 	
 	return delete_(client, params);
 }
-
-/// ditto
-Response delete_(Client client, string indexName, string id, ESParams params = ESParams()) {
-	params["index"] = indexName;
-	params["id"] = id;
-	
-	return delete_(client, params);
-}
-
