@@ -22,6 +22,11 @@ class Client {
 
 	@property Transport transport() { return _transport; }
 
+	this(T = VibeTransport)() {
+		_transport = new T;
+	}
+
+	/// Initialize with a list of hosts and reload the connections
 	this(T = VibeTransport)(Host[] hosts ...) {
 		_transport = new T;
 		_transport.hosts = hosts;

@@ -12,9 +12,6 @@ import elasticsearch.transport.response;
 import elasticsearch.transport.exceptions;
 import elasticsearch.client;
 
-//
-alias createIndex = elasticsearch.api.actions.indices.create;
-
 /** Create an index.
 *
 * Creates a new index
@@ -32,7 +29,7 @@ alias createIndex = elasticsearch.api.actions.indices.create;
 * See_Also: http://www.elasticsearch.org/guide/reference/api/admin-indices-create-index/
 * 
 */
-Response create(Client client, ESParams arguments = ESParams()) {
+Response createIndex(Client client, ESParams arguments = ESParams()) {
 	arguments.enforceParameter("index");
 
 	auto index = arguments["index"];
@@ -43,24 +40,21 @@ Response create(Client client, ESParams arguments = ESParams()) {
 }
 
 ///
-Response create(Client client, string indexName, string indexBody = "{}", ESParams params = ESParams()) {
+Response createIndex(Client client, string indexName, string indexBody = "{}", ESParams params = ESParams()) {
 	params["index"] = indexName;
 	params["body"] = indexBody;
-	return create(client, params);
+	return createIndex(client, params);
 }
 
 ///
-alias deleteIndex = elasticsearch.api.actions.indices.delete_;
-
-///
-Response delete_(Client client, string[] indexes, ESParams arguments = ESParams()) {
+Response deleteIndex(Client client, string[] indexes, ESParams arguments = ESParams()) {
 	auto params = arguments.validateAndExtract("timeout");
 	return client.performRequest(RequestMethod.DELETE, esPathify(esListify(indexes)), params);
 }
 
 ///
-Response delete_(Client client, string index, ESParams params = ESParams()) {
-	return delete_(client, [index], params);
+Response deleteIndex(Client client, string index, ESParams params = ESParams()) {
+	return deleteIndex(client, [index], params);
 }
 
 ///
@@ -80,10 +74,7 @@ Response refresh_(Client client, string index, ESParams params = ESParams()) {
 
 
 ///
-alias indexExists = elasticsearch.api.actions.indices.exists;
-
-///
-bool exists(Client client, ESParams arguments) {
+bool indexExists(Client client, ESParams arguments) {
 	arguments.enforceParameter("index");
 
 	auto params = arguments.validateAndExtract(
@@ -101,8 +92,8 @@ bool exists(Client client, ESParams arguments) {
 }
 
 ///
-bool exists(Client client, string indexName, ESParams params = ESParams()) {
+bool indexExists(Client client, string indexName, ESParams params = ESParams()) {
 	params["index"] = indexName;
 
-	return exists(client, params);
+	return indexExists(client, params);
 }
