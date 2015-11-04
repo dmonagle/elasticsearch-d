@@ -1,6 +1,7 @@
 ﻿module elasticsearch.api.actions;
 
 public import elasticsearch.api.actions.index;
+public import elasticsearch.api.actions.count;
 public import elasticsearch.api.actions.exists;
 public import elasticsearch.api.actions.search;
 public import elasticsearch.api.actions.delete_;
