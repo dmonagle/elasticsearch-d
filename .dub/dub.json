@@ -1,15 +1,15 @@
 {
 	"dub": {
 		"cachedUpgrades": {
-			"feature-test-d": "1.0.1",
-			"memutils": "0.4.2",
-			"colorize": "1.0.5",
-			"vibe-d": "0.7.25",
 			"libevent": "2.0.1+2.0.16",
-			"openssl": "1.1.4+1.0.1g",
 			"libev": "5.0.0+4.04",
-			"libasync": "0.7.5"
+			"openssl": "1.1.4+1.0.1g",
+			"memutils": "0.4.3",
+			"vibe-d": "0.7.25",
+			"libasync": "0.7.5",
+			"feature-test-d": "1.0.1",
+			"colorize": "1.0.5"
 		},
-		"lastUpgrade": "2015-10-27T10:54:18.410926"
+		"lastUpgrade": "2015-11-04T17:40:20.181594"
 	}
 }
