@@ -26,11 +26,11 @@ class VibeTransport : Transport {
 override:
 	protected void transportLog(ESLogLevel level, string message) {
 		final switch(level) {
-			case ESLogLevel.debug_: logDebug(message);
+			case ESLogLevel.debug_: logDebug("%s", message);
 				break;
-			case ESLogLevel.info: logInfo(message);
+			case ESLogLevel.info: logInfo("%s", message);
 				break;
-			case ESLogLevel.error: logError(message);
+			case ESLogLevel.error: logError("%s", message);
 				break;
 		}
 		
