@@ -41,7 +41,7 @@ struct EsBulkProxy {
 	}
 	
 	void appendIndex(string index, string type, string id, Json record) {
-		appendIndex(id, index, type, record.toString);
+		appendIndex(index, type, id, record.toString);
 	}
 	
 	alias buffer this;
