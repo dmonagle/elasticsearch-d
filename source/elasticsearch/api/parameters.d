@@ -33,7 +33,7 @@ static enum ES_COMMON_QUERY_PARAMETERS = [
 ];
 
 /// ESParams is just an alias for a vibe.d dictionary list
-alias ESParams = DictionaryList!(string, false);
+alias ESParams = vibe.inet.message.InetHeaderMap;
 
 bool hasField(const ref ESParams p, string key) {
 	return cast(bool)(key in p);
