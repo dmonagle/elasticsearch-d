@@ -3,3 +3,4 @@
 public import elasticsearch.api.parameters;
 public import elasticsearch.api.actions;
 public import elasticsearch.api.namespace;
+public import elasticsearch.api.filters;

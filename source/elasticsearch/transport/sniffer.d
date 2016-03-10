@@ -35,6 +35,9 @@ class Sniffer {
 	}
 }
 
+
+/*
+// Should be reimplementd as a feature test
 unittest {
 	import std.exception;
 	import elasticsearch.transport.http.vibe;
@@ -52,3 +55,4 @@ unittest {
 	assert(host.hostName == "localhost");
 	assert(host.port == 9200);
 }
+*/
