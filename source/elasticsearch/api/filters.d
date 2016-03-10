@@ -11,7 +11,7 @@ static void ES_FilterReservedFieldNames(ref Json json) {
 unittest {
     auto json = ["_id": "test", "_type": "blah", "okay": "value"].serializeToJson;
     assert(json.length == 3);
-    ES_FilterReservedAttributes(json);
+    ES_FilterReservedFieldNames(json);
     assert(json.length == 1);
     assert(json["okay"].type == Json.Type.string);
 }
