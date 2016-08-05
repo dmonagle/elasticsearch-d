@@ -41,7 +41,7 @@ struct EsBulkProxy {
 	}
 	
 	void appendIndex(string index, string type, string id, string data) {
-		appendAction(index, "update", type, id, data);
+		appendAction(index, "index", type, id, data);
 	}
 	
 	void appendIndex(string index, string type, string id, Json record) {
