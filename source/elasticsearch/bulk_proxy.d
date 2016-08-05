@@ -31,13 +31,17 @@ struct EsBulkProxy {
 		buffer ~= input;
 		++recordCount;
 	}
-	
-	void appendIndex(string index, string type, string id, string data) {
+
+	void appendAction(string index, string method, string type, string id, string data) {
 		string actionString;
 		if (data[$ -1] != '\n') data ~= "\n";
-		actionString = `{"create":{"_index":"` ~ index ~ `","_type":"` ~ type ~ `","_id":"` ~ id ~ `"}}` ~ "\n";
+		actionString = `{"` ~ method ~ `":{"_index":"` ~ index ~ `","_type":"` ~ type ~ `","_id":"` ~ id ~ `"}}` ~ "\n";
 		actionString ~= data;
 		append(actionString);
+	}
+	
+	void appendIndex(string index, string type, string id, string data) {
+		appendAction(index, "update", type, id, data);
 	}
 	
 	void appendIndex(string index, string type, string id, Json record) {
