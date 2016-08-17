@@ -148,9 +148,9 @@ class Transport {
 			transportLog(LogLevel.error, exception.msg);
 		}
 		catch (Exception exception) {
+			transportLog(LogLevel.error, "Elasticsearch exception during: " ~ method.to!string ~ " " ~ c.fullURL(path, parameters));
 			transportLog(LogLevel.error, exception.msg);
-			transportLog(LogLevel.error, method.to!string ~ " " ~ c.fullURL(path, parameters));
-			transportLog(LogLevel.error, requestBody);
+			transportLog(LogLevel.debug_, requestBody);
 		}
 
 		return response;
