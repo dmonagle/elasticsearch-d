@@ -143,14 +143,14 @@ class Transport {
 		catch (HostUnreachableException exception) {
 			transportLog(LogLevel.error, exception.msg);
 			exception.connection.makeDead();
+			throw new RequestException(c, method, path, parameters, requestBody, response);
 		}
 		catch (RequestException exception) {
 			transportLog(LogLevel.error, exception.msg);
+			throw exception;
 		}
 		catch (Exception exception) {
-			transportLog(LogLevel.error, "Elasticsearch exception during: " ~ method.to!string ~ " " ~ c.fullURL(path, parameters));
-			transportLog(LogLevel.error, exception.msg);
-			transportLog(LogLevel.debug_, requestBody);
+			throw new GenericRequestException(c, method, path, parameters, requestBody);
 		}
 
 		return response;

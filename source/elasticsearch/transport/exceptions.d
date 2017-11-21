@@ -45,3 +45,9 @@ class RequestException : Exception {
 	}
 }
 
+class GenericRequestException : RequestException {
+	this(Connection connection, RequestMethod method, string path, ESParams parameters, string requestBody) {
+		super(connection, method, path, parameters, requestBody, Response());
+		this.msg = "Elasticsearch exception during: " ~ method.to!string ~ " " ~ connection.fullURL(path, parameters);
+	}
+}
