@@ -59,9 +59,10 @@ override:
 					}
 					else {
 						switch(res.statusCode) {
-							case(HTTPStatus.gatewayTimeout, HTTPStatus.requestTimeout): 
+							case HTTPStatus.gatewayTimeout:
+							case HTTPStatus.requestTimeout:
 								throw new HostUnreachableException(connection);
-							default: 
+							default:
 								auto responseBody = res.bodyReader.readAllUTF8();
 								response.responseBody = responseBody;
 								throw new RequestException(connection, method, path, parameters, requestBody, response);

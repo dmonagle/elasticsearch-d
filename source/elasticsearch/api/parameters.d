@@ -9,10 +9,10 @@ module elasticsearch.api.parameters;
 
 import vibe.utils.dictionarylist;
 import elasticsearch.api.exceptions;
-import core.exception;
 
 import std.array;
 import std.algorithm;
+import std.exception;
 import std.string;
 
 /// Common ES parameters
@@ -106,7 +106,10 @@ string esPathify(string[] path ...) {
 	auto stripped = array(path.map!((p) => p.strip));
 	auto cleanPath = stripped.remove!((p) => !p.length);
 	auto returnString = cleanPath.join("/");
-	return returnString.squeeze("/");
+
+	import std.regex : ctRegex, replaceAll;
+	enum squeezeRex = ctRegex!`/+`;
+	return returnString.replaceAll!((m) { return "/"; })(squeezeRex);
 }
 
 unittest {

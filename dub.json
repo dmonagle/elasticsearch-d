@@ -1,17 +1,17 @@
 {
-	"name": "elasticsearch-d",
-	"description": "A D Elasticsearch library with an API similar to the official Elasticsearch packages for other languages.",
-	"copyright": "Copyright © 2014, David Monagle",
-	"authors": ["David Monagle"],
-	"dependencies": {
-        "vibe-d": "~>0.7.25",
+    "name": "elasticsearch-d",
+    "description": "A D Elasticsearch library with an API similar to the official Elasticsearch packages for other languages.",
+    "copyright": "Copyright © 2014, David Monagle",
+    "authors": ["David Monagle"],
+    "dependencies": {
+        "vibe-d": "~>0.8.2",
         "feature-test-d": "~>1.0.4"
     },
     "configurations": [
         {
-                "targetType": "library",
-                "name": "elasticsearch-d"
+            "targetType": "library",
+            "name": "elasticsearch-d"
         }
     ],
-	"license": "MIT",
+    "license": "MIT"
 }
