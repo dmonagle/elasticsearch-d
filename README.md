@@ -24,7 +24,7 @@ development, as well as vibe.d and other packages. For the moment though, it wor
 
 ## Quick example
 
-`D
+```D
 	import std.stdio;
 
 	import elasticsearch.api.actions.base;
@@ -33,7 +33,7 @@ development, as well as vibe.d and other packages. For the moment though, it wor
 	// The host structure defaults to connecting to localhost
 	auto client = new Client(Host());
 
-	Parameters p;
+	ESParams p;
 	p.addField("index", "es_test_index");
 	p.addField("body", `
 		{ 
@@ -65,13 +65,13 @@ development, as well as vibe.d and other packages. For the moment though, it wor
 	// Basic query
 
 
-	Parameters searchParams;
+	ESParams searchParams;
 	searchParams["body"] = "<elasticsearch query>";
 	searchParams["index"] = "es_test_index";
 
-	auto response = client.search(params);
+	auto response = client.search(searchParams);
 
 	puts response.jsonBody;
 
 	client.deleteIndex("es_test_index");
-`
+```
