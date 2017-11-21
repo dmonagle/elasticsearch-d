@@ -1,77 +1,111 @@
-﻿elasticsearch-d is a package modeled on the official Elasticsearch ruby client library. This one package contains both
-the transport and api packages.
+﻿elasticsearch-d
+===============
 
-While currently incomplete in terms of the API, the majority of the work has been done on the transport making most API 
-implmentations trivial. Most API implementations just need a D function defined to take in the required parameters and 
-pass them through to the transport layers.
+elasticsearch-d is a package modeled on the official Elasticsearch ruby client
+library. This one package contains both the transport and api packages.
 
-While this package definitely needs more work, it seems very stable using the APIs that have been written so far.
-The APIs currently being used the mostly straightforward indices and base APIs.
+While currently incomplete in terms of the API, the majority of the work has
+been done on the transport making most API implmentations trivial. Most API
+implementations just need a D function defined to take in the required
+parameters and pass them through to the transport layers.
 
-This package also currently relies on vibe.d. Although it's quite possible with more work that this could be optional
-and a curl transport could be developed, the only functioning transport at this point is called VibeTransport. Also
-the package relies rather heavily on vibe.data.json (which could be replaced in future with [a new phobos JSON candidate](https://github.com/s-ludwig/std_data_json)
-Finally elasticsearch-d also relies on the DictionaryList defined in vibe.d, because it was outside of the scope of
-the project to rewrite something like this.
+While this package definitely needs more work, it seems very stable using the
+APIs that have been written so far.  The APIs currently being used the mostly
+straightforward indices and base APIs.
 
-I tried to make the API work exactly the same as the Ruby api, but although the overall design of the transport side
-of things should be able to remain consitent with the official packages, the API needs some more thought. Ruby allows
-named parameters in the form of a hash whereas there is no such thing in D. Elasticsearch endpoints can take a large
-number of optional parameters so a more elegant solution is required.
+This package also currently relies on vibe.d. Although it's quite possible with
+more work that this could be optional and a curl transport could be developed,
+the only functioning transport at this point is called VibeTransport. Also the
+package relies rather heavily on vibe.data.json (which could be replaced in
+future with [a new phobos JSON
+candidate](https://github.com/s-ludwig/std_data_json) Finally elasticsearch-d
+also relies on the DictionaryList defined in vibe.d, because it was outside of
+the scope of the project to rewrite something like this.
 
-Because of all of this, I expect there will be breaking changes as I continue to keep it inline with elasticsearch 
-development, as well as vibe.d and other packages. For the moment though, it works well with the implemented APIs.
+I tried to make the API work exactly the same as the Ruby api, but although the
+overall design of the transport side of things should be able to remain
+consitent with the official packages, the API needs some more thought. Ruby
+allows named parameters in the form of a hash whereas there is no such thing in
+D. Elasticsearch endpoints can take a large number of optional parameters so a
+more elegant solution is required.
+
+Because of all of this, I expect there will be breaking changes as I continue
+to keep it inline with elasticsearch development, as well as vibe.d and other
+packages. For the moment though, it works well with the implemented APIs.
 
 ## Quick example
 
-`D
-	import std.stdio;
+```D
+void  main()
+{
+    import std.stdio;
 
-	import elasticsearch.api.actions.base;
-	import elasticsearch.api.actions.indices;
+    import vibe.d;
+    import elasticsearch.client;
+    import elasticsearch.api.parameters;
+    import elasticsearch.api.actions.indices;
 
-	// The host structure defaults to connecting to localhost
-	auto client = new Client(Host());
+    enum testIndex = "es_test_index";
 
-	Parameters p;
-	p.addField("index", "es_test_index");
-	p.addField("body", `
-		{ 
-			"settings": {
-	           "index": {
-	             "number_of_shards": 1,
-	             "number_of_replicas": 0,
-	           },
-	         },
-	         "mappings": {
-	           "user": {
-	             "properties": {
-	               "name": { "type": "string"}
-	             }
-	           }
-	         }			
-		}
-	`);
+    auto host = Host();
+    host.user = "elastic";
+    host.password = "changeme";
 
-	auto user = Json.emptyObject;
-	user.name = "Ginny";
-	user._id = "1024";
+    auto client = new Client(host);
 
-	client.createIndex(p);
+    Response r;
 
-	// Index the user to the es_text_index container with a type of "user" and id of "1024"
-	client.index("es_test_index", "user", "1024", user.toString);
+    ESParams p;
+    p.addField("index", testIndex);
+    p.addField("body", `
+        {
+            "settings": {
+                "index": {
+                    "number_of_shards": 1,
+                    "number_of_replicas": 0
+                }
+            },
+            "mappings": {
+                "user": {
+                    "properties": {
+                        "name": { "type": "string" }
+                    }
+                }
+            }
+        }
+    `);
+    r = client.createIndex(p);
 
-	// Basic query
+    auto user = Json.emptyObject;
+    user["name"] = "Ginny";
+    r = client.index(testIndex, "user", "1024", user.toString);
+    enforce(r.status / 100 == 2, "Operation didn't succeed:: " ~ r.responseBody);
 
+    user["name"] = "Bob";
+    r = client.index(testIndex, "user", "1025", user.toString);
+    enforce(r.status / 100 == 2, "Operation didn't succeed:: " ~ r.responseBody);
 
-	Parameters searchParams;
-	searchParams["body"] = "<elasticsearch query>";
-	searchParams["index"] = "es_test_index";
+    user["name"] = "Sue";
+    r = client.index(testIndex, "user", "1026", user.toString);
+    enforce(r.status / 100 == 2, "Operation didn't succeed:: " ~ r.responseBody);
 
-	auto response = client.search(params);
+    auto search = Json.emptyObject;
 
-	puts response.jsonBody;
+    ESParams searchParams;
+    searchParams["index"] = testIndex;
+    searchParams["body"] = `{ "query": { "match_all": {} } }`;
 
-	client.deleteIndex("es_test_index");
-`
+    import core.thread : Thread;
+    import std.datetime : seconds;
+
+    "sleeping until expected ready".writeln;
+    Thread.sleep(10.seconds);
+
+    auto result = client.search(searchParams);
+
+    writeln((result.status / 100 == 2) ? "success" : "failure");
+
+    if(result.bodyIsJson)
+        result.jsonBody.toPrettyString.writeln;
+}
+```
