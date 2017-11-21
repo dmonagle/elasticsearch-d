@@ -1,5 +1,6 @@
 ﻿module elasticsearch.transport.transport;
 
+import std.conv;
 import std.string;
 import vibe.data.json;
 public import elasticsearch.transport.response;
