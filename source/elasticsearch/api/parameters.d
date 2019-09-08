@@ -81,6 +81,7 @@ unittest {
 
 /// Throws an argument exception if the given parameter is not included in `p`
 void enforceParameter(const ref ESParams p, string name) {
+	import std.exception : enforce;
 	enforce(p.hasField(name), new ArgumentException(p, name ~ " parameter is required"));
 }
 
@@ -103,6 +104,7 @@ string esEscape(string value) {
 
 /// Takes an array of strings representing a path and returns a clean path string
 string esPathify(string[] path ...) {
+	import undead.string : squeeze;
 	auto stripped = array(path.map!((p) => p.strip));
 	auto cleanPath = stripped.remove!((p) => !p.length);
 	auto returnString = cleanPath.join("/");
