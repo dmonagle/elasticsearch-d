@@ -41,7 +41,7 @@ override:
 	Response performTransportRequest(Connection connection, RequestMethod method, string path, ESParams parameters, string requestBody = "") {		
 		Response response;
 		requestHTTP(connection.fullURL(path, parameters),
-			(scope req) {
+			(scope HTTPClientRequest req) {
 				req.method = vibeTransportRequestMethod(method);
 				if (requestBody != "") {
 					req.writeBody(cast(ubyte[])requestBody);
@@ -49,7 +49,7 @@ override:
 				logDebugV("ES Transport Request: %s %s", method, path);
 				if (requestBody.length) logTrace("ES Transport Request Body: \n%s", requestBody);
 			},
-			(scope res) {
+			(scope HTTPClientResponse res) {
 				response.status = res.statusCode;
 				response.headers = res.headers;
 				if (method != RequestMethod.HEAD) {
@@ -59,7 +59,7 @@ override:
 					}
 					else {
 						switch(res.statusCode) {
-							case(HTTPStatus.gatewayTimeout, HTTPStatus.requestTimeout): 
+							case HTTPStatus.gatewayTimeout, HTTPStatus.requestTimeout:
 								throw new HostUnreachableException(connection);
 							default: 
 								auto responseBody = res.bodyReader.readAllUTF8();

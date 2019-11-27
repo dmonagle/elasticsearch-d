@@ -27,6 +27,7 @@ struct Host {
 	string password;
 
 	@property string url() {
+		import std.conv : to;
 		auto urlString = protocol ~ "://";
 		if (user.length) urlString ~= user ~ ":" ~ password ~ "@";
 		urlString ~= hostName ~ ":" ~ to!string(port);
@@ -129,6 +130,7 @@ class Transport {
 
 	Response performRequest(RequestMethod method, string path, ESParams parameters = ESParams(), string requestBody = "") {
 		// TODO: Make this more like the official method where it logs failures and automatically reloads connections on failure etc...
+		import std.conv : to;
 		int tries;
 		bool success;
 

@@ -1,0 +1,11 @@
+name "elasticsearch-d"
+description "A D Elasticsearch library with an API similar to the official Elasticsearch packages for other languages."
+authors "David Monagle"
+copyright "Copyright © 2014, David Monagle"
+license "MIT"
+dependency "vibe-d" version="~>0.8.5"
+dependency "feature-test-d" version="~>1.0.4"
+dependency "undead" version="~master"
+configuration "elasticsearch-d" {
+	targetType "library"
+}
